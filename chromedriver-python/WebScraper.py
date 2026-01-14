@@ -9,9 +9,9 @@ options = webdriver.ChromeOptions()
 #如果你想指定chrome浏览器的位置，可以取消下面一行的注释并指定路径
 options.binary_location = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
 # 如果你非要用原来的路径，请确保关闭所有已打开的 Chrome
-clean_cookies_path = r'D:\GitHub\WebScraper-python-selenium\login-cookies'
+#clean_cookies_path = r'D:\GitHub\WebScraper-python-selenium\login-cookies'
 # 添加启动参数
-options.add_argument(f'--user-data-dir={clean_cookies_path}')
+#options.add_argument(f'--user-data-dir={clean_cookies_path}')
 
 #自动下载并启动chromerdriver
 service = Service(ChromeDriverManager().install())

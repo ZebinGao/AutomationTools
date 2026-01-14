@@ -1,0 +1,58 @@
+# --- 字节码和缓存 ---
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- 虚拟环境 (强烈建议) ---
+.venv/
+venv/
+ENV/
+env/
+bin/
+lib/
+# 针对 Conda 环境
+conda-meta/
+
+# --- 依赖分发 ---
+dist/
+build/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- 单元测试与覆盖率 ---
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# --- 环境变量与私密信息 ---
+.env
+.venv
+*.env
+*.bak
+*.swp
+
+# --- 日志文件 ---
+*.log
+
+# --- 操作系统相关 ---
+.DS_Store
+Thumbs.db
+
+# --- 编辑器/IDE 相关 ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# --- Jupyter Notebook 缓存 ---
+.ipynb_checkpoints

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinAppDriver Web 控制台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WinAppDriver Web 控制台</h1>
+        </header>
+        
+        <div class="control-panel">
+            <div class="session-control">
+                <h2>会话控制</h2>
+                <div class="form-group">
+                    <label for="appPath">应用程序路径:</label>
+                    <input type="text" id="appPath" placeholder="例如: C:\Windows\System32\calc.exe" value="C:\Windows\System32\calc.exe">
+                </div>
+                <button id="startSessionBtn">启动会话</button>
+                <button id="stopSessionBtn" disabled>停止会话</button>
+            </div>
+            
+            <div class="action-panel">
+                <h2>操作面板</h2>
+                <div class="form-group">
+                    <label for="elementStrategy">查找策略:</label>
+                    <select id="elementStrategy">
+                        <option value="name">Name</option>
+                        <option value="id">ID</option>
+                        <option value="xpath">XPath</option>
+                        <option value="accessibility id">Accessibility ID</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="elementLocator">定位器:</label>
+                    <input type="text" id="elementLocator" placeholder="输入定位器">
+                </div>
+                <button id="findElementBtn">查找元素</button>
+                <button id="clickElementBtn" disabled>点击元素</button>
+                
+                <div class="form-group">
+                    <label for="textInput">文本输入:</label>
+                    <input type="text" id="textInput" placeholder="输入要发送的文本">
+                </div>
+                <button id="sendTextBtn" disabled>发送文本</button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="screenshot-container">
+                <h2>应用程序截图</h2>
+                <div id="screenshotWrapper">
+                    <img id="screenshot" src="" alt="应用程序截图">
+                    <div id="loadingIndicator" class="loading hidden">加载中...</div>
+                </div>
+                <button id="refreshScreenshotBtn">刷新截图</button>
+            </div>
+            
+            <div class="source-container">
+                <h2>控件树</h2>
+                <div id="sourceTree">
+                    <p>尚未加载控件树</p>
+                </div>
+                <button id="refreshSourceBtn">刷新控件树</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

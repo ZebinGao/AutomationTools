@@ -16,3 +16,12 @@ git config --global https.proxy 'http://127.0.0.1:7880'
 ## 新建cookies文件夹
 参考如下的指令
 clean_cookies_path = r'D:\GitHub\WebScraper-python-selenium\login-cookies'
+
+
+## 多个python环境冲突
+
+升级selenium
+`python -m pip install --upgrade selenium`
+
+安装driver
+`python -m pip install webdriver-manager`
