@@ -1,3 +1,11 @@
+## 安装WinAppDeriver
+> 默认路径
+> 开启开发者模式
+> 官方有一个最简单的配置，使用C#。
+
+如下图所示
+![](./winappdriver-csharp/pictures/calulator.png)
+
 ## 关键配置说明：
 venv/ 和 .venv/：永远不要把虚拟环境里的数千个第三方包上传。他人应该通过你的 requirements.txt 或 pyproject.toml 来重新构建环境。
 
@@ -17,3 +25,6 @@ __pycache__/：这是 Python 运行产生的字节码，与具体的机器环境
 ## WebScraper-python-selenium
 用于自动化抓取网页信息，使用了谷歌的网页驱动。效果如下图。
 ![](./chromedriver-python/example.png)
+
+
+

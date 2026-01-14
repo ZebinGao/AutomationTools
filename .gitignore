@@ -56,3 +56,58 @@ Thumbs.db
 
 # --- Jupyter Notebook 缓存 ---
 .ipynb_checkpoints
+
+
+## --- 编译输出 ---
+[Dd]ebug/
+[Bb]in/
+[Obj]/
+[Log]/
+[Tt]est[Rr]esults/
+
+## --- Visual Studio 特有文件 ---
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.ide/
+
+## --- Visual Studio Code 特有文件 ---
+.vscode/
+# 如果你希望保留 launch.json 或 tasks.json，可以取消注释下面两行：
+# !.vscode/launch.json
+# !.vscode/tasks.json
+
+## --- NuGet 包管理 ---
+*.nupkg
+# 排除本地包缓存文件夹
+node_modules/
+packages/
+# 排除自动生成的备份文件
+*.orig
+
+## --- .NET 核心/跨平台 ---
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+## --- 操作系统临时文件 ---
+.DS_Store
+Thumbs.db
+
+## --- 敏感信息与本地配置 ---
+*.swp
+*.bak
+.env
+.env.*
+appsettings.Development.json
+# 如果 appsettings.json 包含连接字符串，建议将其作为模板，不提交真实配置
+# appsettings.json
+
+## --- 单元测试/覆盖率 ---
+*.jfm
+*.pfx
+*.publishsettings
+*.coverage
+*.coveragexml
