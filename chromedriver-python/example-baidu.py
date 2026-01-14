@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
@@ -15,19 +16,29 @@ try:
     # 2. 访问百度
     driver.get("https://www.baidu.com/s?wd=")
 
-    # 3. 定位百度的搜索输入框
-    # 百度输入框的 ID 长期以来一直是 'kw' (取自 "Key Word")
-    search_box = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, "kw"))
-    )
+    # # 3. 定位百度的搜索输入框
+    # # 百度输入框的 ID 长期以来一直是 'kw' (取自 "Key Word")
+    # search_box = WebDriverWait(driver, 10).until(
+    #     EC.presence_of_element_located((By.ID, "kw"))
+    # )
 
-    # 4. 模拟输入并回车
-    search_box.click()
-    time.sleep(1)
-    search_box.send_keys("Python 自动化爬虫")
+    # # 4. 模拟输入并回车
+    # search_box.click()
+    # time.sleep(1)
+    # search_box.send_keys("Python 自动化爬虫")
     
-    # 直接发送回车键
-    search_box.send_keys(Keys.ENTER) 
+    # # 直接发送回车键
+    # search_box.send_keys(Keys.ENTER) 
+
+    # 很多搜索引擎（如百度、谷歌）为了提升用户体验，会在页面加载完成后，通过 JavaScript 自动将光标定位（focus）在搜索框中。
+    # 1. 确保页面加载完成
+    time.sleep(10) 
+
+    # 2. 直接在当前焦点位置输入文字并回车
+    actions = ActionChains(driver)
+    actions.send_keys("Python 自动化技巧")
+    actions.send_keys(Keys.ENTER)
+    actions.perform()
     
 
     # 5. 等待搜索结果加载并打印第一条结果的标题
