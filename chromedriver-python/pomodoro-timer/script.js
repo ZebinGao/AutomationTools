@@ -1,14 +1,19 @@
 class PomodoroTimer {
     constructor() {
         // 默认时间设置（毫秒）
-        this.workTime = 25 * 60 * 1000; // 25分钟
-        this.shortBreakTime = 5 * 60 * 1000; // 5分钟
-        this.longBreakTime = 15 * 60 * 1000; // 15分钟
+        this.defaultWorkTime = 25 * 60 * 1000; // 25分钟
+        this.defaultShortBreakTime = 5 * 60 * 1000; // 5分钟
+        this.defaultLongBreakTime = 15 * 60 * 1000; // 15分钟
+
+        // 从localStorage加载或使用默认值
+        this.workTime = parseInt(localStorage.getItem('pomodoroWorkTime')) * 60 * 1000 || this.defaultWorkTime;
+        this.shortBreakTime = parseInt(localStorage.getItem('pomodoroShortBreakTime')) * 60 * 1000 || this.defaultShortBreakTime;
+        this.longBreakTime = parseInt(localStorage.getItem('pomodoroLongBreakTime')) * 60 * 1000 || this.defaultLongBreakTime;
         
         // 当前状态
-        this.currentTime = this.workTime;
-        this.isRunning = false;
         this.currentMode = 'work'; // 'work', 'shortBreak', 'longBreak'
+        this.currentTime = this.getModeTime(this.currentMode); // 初始化时使用当前模式的时间
+        this.isRunning = false;
         this.sessionCount = 0;
         
         // 计时器变量
@@ -24,12 +29,21 @@ class PomodoroTimer {
         this.workModeBtn = document.getElementById('work-mode');
         this.shortBreakModeBtn = document.getElementById('short-break-mode');
         this.longBreakModeBtn = document.getElementById('long-break-mode');
+
+        // 新增DOM元素
+        this.themeToggleBtn = document.getElementById('theme-toggle');
+        this.workTimeInput = document.getElementById('work-time');
+        this.shortBreakTimeInput = document.getElementById('short-break-time');
+        this.longBreakTimeInput = document.getElementById('long-break-time');
+        this.saveSettingsBtn = document.getElementById('save-settings');
         
         // 初始化事件监听器
         this.initEventListeners();
         
         // 初始化显示
+        this.loadSettings();
         this.updateDisplay();
+        this.applyThemeFromLocalStorage();
     }
     
     initEventListeners() {
@@ -40,6 +54,22 @@ class PomodoroTimer {
         this.workModeBtn.addEventListener('click', () => this.setMode('work'));
         this.shortBreakModeBtn.addEventListener('click', () => this.setMode('shortBreak'));
         this.longBreakModeBtn.addEventListener('click', () => this.setMode('longBreak'));
+
+        this.themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+        this.saveSettingsBtn.addEventListener('click', () => this.saveSettings());
+    }
+
+    getModeTime(mode) {
+        switch (mode) {
+            case 'work':
+                return this.workTime;
+            case 'shortBreak':
+                return this.shortBreakTime;
+            case 'longBreak':
+                return this.longBreakTime;
+            default:
+                return this.workTime;
+        }
     }
     
     start() {
@@ -49,10 +79,11 @@ class PomodoroTimer {
         this.startBtn.disabled = true;
         this.pauseBtn.disabled = false;
         
-        const startTime = Date.now() - (this.workTime - this.currentTime);
+        const modeTime = this.getModeTime(this.currentMode);
+        const startTime = Date.now() - (modeTime - this.currentTime);
         
         this.timer = setInterval(() => {
-            this.currentTime = this.workTime - (Date.now() - startTime);
+            this.currentTime = modeTime - (Date.now() - startTime);
             
             if (this.currentTime <= 0) {
                 this.completeSession();
@@ -73,19 +104,7 @@ class PomodoroTimer {
     
     reset() {
         this.pause();
-        
-        switch (this.currentMode) {
-            case 'work':
-                this.currentTime = this.workTime;
-                break;
-            case 'shortBreak':
-                this.currentTime = this.shortBreakTime;
-                break;
-            case 'longBreak':
-                this.currentTime = this.longBreakTime;
-                break;
-        }
-        
+        this.currentTime = this.getModeTime(this.currentMode);
         this.updateDisplay();
     }
     
@@ -222,6 +241,57 @@ class PomodoroTimer {
         // 格式化时间为 MM:SS
         const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         this.timeDisplay.textContent = formattedTime;
+    }
+
+    // 新增主题切换功能
+    toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+        const isDarkTheme = document.body.classList.contains('dark-theme');
+        localStorage.setItem('pomodoroTheme', isDarkTheme ? 'dark' : 'light');
+        this.themeToggleBtn.textContent = isDarkTheme ? '☀️' : '🌙';
+    }
+
+    applyThemeFromLocalStorage() {
+        const savedTheme = localStorage.getItem('pomodoroTheme');
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-theme');
+            this.themeToggleBtn.textContent = '☀️';
+        } else {
+            document.body.classList.remove('dark-theme');
+            this.themeToggleBtn.textContent = '🌙';
+        }
+    }
+
+    // 新增时间设置功能
+    loadSettings() {
+        this.workTimeInput.value = this.workTime / 60000;
+        this.shortBreakTimeInput.value = this.shortBreakTime / 60000;
+        this.longBreakTimeInput.value = this.longBreakTime / 60000;
+    }
+
+    saveSettings() {
+        const newWorkTime = parseInt(this.workTimeInput.value);
+        const newShortBreakTime = parseInt(this.shortBreakTimeInput.value);
+        const newLongBreakTime = parseInt(this.longBreakTimeInput.value);
+
+        if (isNaN(newWorkTime) || newWorkTime <= 0 ||
+            isNaN(newShortBreakTime) || newShortBreakTime <= 0 ||
+            isNaN(newLongBreakTime) || newLongBreakTime <= 0) {
+            alert("请输入有效的时间（大于0的整数）");
+            return;
+        }
+
+        this.workTime = newWorkTime * 60 * 1000;
+        this.shortBreakTime = newShortBreakTime * 60 * 1000;
+        this.longBreakTime = newLongBreakTime * 60 * 1000;
+
+        localStorage.setItem('pomodoroWorkTime', newWorkTime);
+        localStorage.setItem('pomodoroShortBreakTime', newShortBreakTime);
+        localStorage.setItem('pomodoroLongBreakTime', newLongBreakTime);
+
+        alert("时间设置已保存！");
+        this.reset(); // 保存设置后重置计时器
+        this.setMode(this.currentMode); // 确保当前模式的时间更新
     }
 }
 

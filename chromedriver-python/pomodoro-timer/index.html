@@ -8,23 +8,49 @@
 </head>
 <body>
     <div class="container">
-        <h1>番茄工作计时器</h1>
+        <div class="header">
+            <h1>番茄工作计时器</h1>
+            <div class="theme-toggle">
+                <button id="theme-toggle" class="theme-btn">🌙</button>
+            </div>
+        </div>
+        
         <div class="timer-display">
             <div id="time">25:00</div>
             <div id="mode">专注时间</div>
         </div>
+        
         <div class="controls">
             <button id="start-btn" class="btn">开始</button>
             <button id="pause-btn" class="btn" disabled>暂停</button>
             <button id="reset-btn" class="btn">重置</button>
         </div>
+        
         <div class="session-count">
             <p>已完成番茄钟: <span id="count">0</span></p>
         </div>
+        
         <div class="mode-selector">
             <button id="work-mode" class="mode-btn active">专注时间</button>
             <button id="short-break-mode" class="mode-btn">短休息</button>
             <button id="long-break-mode" class="mode-btn">长休息</button>
+        </div>
+        
+        <div class="settings">
+            <h3>自定义时间设置</h3>
+            <div class="setting-group">
+                <label for="work-time">专注时间:</label>
+                <input type="number" id="work-time" min="1" max="60" value="25"> 分钟
+            </div>
+            <div class="setting-group">
+                <label for="short-break-time">短休息时间:</label>
+                <input type="number" id="short-break-time" min="1" max="30" value="5"> 分钟
+            </div>
+            <div class="setting-group">
+                <label for="long-break-time">长休息时间:</label>
+                <input type="number" id="long-break-time" min="1" max="60" value="15"> 分钟
+            </div>
+            <button id="save-settings" class="btn save-btn">保存设置</button>
         </div>
     </div>
     <script src="script.js"></script>
